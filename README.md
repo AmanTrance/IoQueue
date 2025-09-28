@@ -2,7 +2,7 @@
 
 ## 0.1.0.0 -- 2025-09-28
 
-* Initialize Base For IoQueue
+* Initialize Base For IoQueue (Done)
 * Will Proceed with a custom protocol over SCTP for inter cluster operations
 * Also Need to add Removal of old entries if not the type of streams
 * Buffering of read writes using Mmap
