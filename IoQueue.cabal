@@ -1,0 +1,41 @@
+cabal-version:      3.4
+name:               IoQueue
+version:            0.1.0.0
+
+license:            BSD-3-Clause
+license-file:       LICENSE
+
+author:             amanfreecs
+maintainer:         aman.hobo@gmail.com
+
+category:           Control
+build-type:         Simple
+
+extra-doc-files:    CHANGELOG.md
+
+common flags
+    ghc-options: -Wall -O3 -threaded -rtsopts +RTS -N8 -RTS
+
+library
+    exposed-modules:
+        IoQueue
+    build-depends:
+        base,
+        bytestring,
+        binary
+    ghc-options: -staticlib -O3
+    hs-source-dirs:   src
+    default-language: GHC2021
+
+executable IoQueue
+    import:           flags
+    main-is:          Main.hs
+    build-depends:
+        base,
+        IoQueue,
+        http-client,
+        http-types,
+        network,
+        bytestring
+    hs-source-dirs:   exe
+    default-language: GHC2021
