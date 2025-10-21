@@ -17,7 +17,7 @@ import GHC.IO.IOMode (IOMode(ReadWriteMode))
 import Data.ByteString.Lazy (hPut, hGet)
 import Data.Binary.Get 
 import GHC.Int 
-import Data.IORef (IORef, newIORef, writeIORef, readIORef)
+import Data.IORef (IORef, newIORef, writeIORef, readIORef, modifyIORef)
 import GHC.IO.Handle.Lock (hUnlock)
 
 data IoQueue = IoQueue { fd :: Handle, r :: IORef Int, w :: IORef Int }
@@ -36,9 +36,9 @@ pushIoQueue IoQueue { fd, w } xs = do
         computation = BP.putInt64be $ fromIntegral len
     offset <- readIORef w
     hSeek fd AbsoluteSeek $ fromIntegral offset
-    writeIORef w (offset + len + 8)
     hPut fd $ BP.runPut computation
     BL.hPut fd xs
+    writeIORef w (offset + len + 8)
     hUnlock fd
 
 popIoQueue :: IoQueue -> IO (Maybe BL.ByteString)

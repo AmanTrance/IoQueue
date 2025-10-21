@@ -14,15 +14,17 @@ build-type:         Simple
 extra-doc-files:    CHANGELOG.md
 
 common flags
-    ghc-options: -Wall -O3 -threaded -rtsopts +RTS -N8 -RTS
+    ghc-options: -Wall -O3 -threaded -with-rtsopts=-N10
 
 library
     exposed-modules:
-        IoQueue
+        IoQueue,
+        Server.IoServer
     build-depends:
         base,
-        bytestring,
-        binary
+        bytestring >= 0.12.0,
+        binary >= 0.8.9.0,
+        network >= 3.2.7
     ghc-options: -staticlib -O3
     hs-source-dirs:   src
     default-language: GHC2021
@@ -32,10 +34,6 @@ executable IoQueue
     main-is:          Main.hs
     build-depends:
         base,
-        IoQueue,
-        http-client,
-        http-types,
-        network,
-        bytestring
+        IoQueue >= 0.1.0.0
     hs-source-dirs:   exe
     default-language: GHC2021
